@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//
+#include <unistd.h>
+#include <sys/types.h>
+
 void sh_loop();
 void type_prompt();
 char* sh_read_input();
@@ -10,6 +12,7 @@ void exec_instr(char** args);
 
 void cat(char* filename);
 void cd(char* dir);
+void sh_chmod(char* mode, char* name);
 void echo(char* str, char* filename);
 void find(char* dir);
 void help();
@@ -18,6 +21,9 @@ void sh_mkdir(char* dir);
 void pwd();
 void rm(char* filename);
 void sh_rmdir(char* dir);
+void sh_stat(char* name);
+void touch(char* filename);
+void sh_umask(char* mode);
 
 #define input_bufSize 1024
 #define tok_bufSize 64
@@ -25,7 +31,12 @@ void sh_rmdir(char* dir);
 
 int RUN = 1;
 
-int main() {
+int main(int argc, char* argv[]) {
+	
+	if(argc > 1) {
+		setuid(atoi(argv[1]));
+		setgid(atoi(argv[2]));
+	}
 	
 	sh_loop();
 
@@ -43,14 +54,6 @@ void sh_loop() {
 		input = sh_read_input();
 		args = sh_split_input(input);
 		exec_instr(args);
-
-		/*
-		int args_len = -1;
-		while(args[++args_len] != NULL) {};
-		for(int i=0;i<args_len;i++) {
-			printf("%s\n", args[i]);
-		}
-		*/
 
 		free(input);
 		free(args);
@@ -134,36 +137,49 @@ void exec_instr(char** args){
 		printf("GoodBye!\n");
 		RUN = 0;	
 	}
-
-	if(!strcmp(args[0], "cat")) {
+	else if(!strcmp(args[0], "cat")) {
 		cat(args[1]);
 	}
-	if(!strcmp(args[0], "cd")) {
+	else if(!strcmp(args[0], "cd")) {
 		cd(args[1]);
 	}
-	if(!strcmp(args[0], "echo")) {
+	else if(!strcmp(args[0], "chmod")) {
+		sh_chmod(args[1], args[2]);
+	}
+	else if(!strcmp(args[0], "echo")) {
 		echo(args[1], args[2]);
 	}
-	if(!strcmp(args[0], "find")) {
+	else if(!strcmp(args[0], "find")) {
 		find(args[1]);
 	}
-	if(!strcmp(args[0], "help")) {
+	else if(!strcmp(args[0], "help")) {
 		help();
 	}
-	if(!strcmp(args[0], "id")) {
+	else if(!strcmp(args[0], "id")) {
 		id();
 	}
-	if(!strcmp(args[0], "mkdir")) {
+	else if(!strcmp(args[0], "mkdir")) {
 		sh_mkdir(args[1]);
 	}
-	if(!strcmp(args[0], "pwd")) {
+	else if(!strcmp(args[0], "pwd")) {
 		pwd();
 	}
-	if(!strcmp(args[0], "rm")) {
+	else if(!strcmp(args[0], "rm")) {
 		rm(args[1]);
 	}
-	if(!strcmp(args[0], "rmdir")) {
+	else if(!strcmp(args[0], "rmdir")) {
 		sh_rmdir(args[1]);
+	}
+	else if(!strcmp(args[0], "stat")) {
+		sh_stat(args[1]);
+	}
+	else if(!strcmp(args[0], "touch")) {
+		touch(args[1]);
+	}
+	else if(!strcmp(args[0], "umask")) {
+		sh_umask(args[1]);
+	}else {
+		printf("%s: command not found. type \'help\' to get command list\n", args[0]);
 	}
 
 }

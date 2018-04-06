@@ -4,8 +4,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-void print_info(char* name, char* type, long int size);
-char* get_type(int d_type);
+void print_info(char* name, char* type, long long int size);
+char* get_dirp_type(int d_type);
 
 void find(char* dir) {
 	
@@ -18,7 +18,7 @@ void find(char* dir) {
 			while((dirp = readdir(dp)) != NULL) {
 				struct stat buf;
 				stat(dirp->d_name, &buf);
-				print_info(dirp->d_name, get_type(dirp->d_type), buf.st_size);
+				print_info(dirp->d_name, get_dirp_type(dirp->d_type), (long long)buf.st_size);
 			}
 		}
 	}else {
@@ -31,7 +31,7 @@ void find(char* dir) {
 			while((dirp = readdir(dp)) != NULL) {
 				struct stat buf;
 				stat(dirp->d_name, &buf);
-				print_info(dirp->d_name, get_type(dirp->d_type), buf.st_size);
+				print_info(dirp->d_name, get_dirp_type(dirp->d_type), (long long)buf.st_size);
 			}
 			chdir(pwd);
 		}
@@ -42,11 +42,11 @@ void find(char* dir) {
 	return;
 }
 
-void print_info(char* name, char* type, long int size) {
-	printf("%-20s %-15s %d\n", name, type, size);
+void print_info(char* name, char* type, long long int size) {
+	printf("%-20s %-15s %lld\n", name, type, size);
 }
 
-char* get_type(int d_type) {
+char* get_dirp_type(int d_type) {
 
 	char* type;
 	switch(d_type){
