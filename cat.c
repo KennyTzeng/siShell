@@ -18,7 +18,7 @@ void cat(char* filename) {
 		read(fd, buf, sizeof(buf));
 		printf("%s\n", buf);
 	}else {
-		printf("cat: %s: No such file or directory\n", filename);
+		printf("cat: %s: No such file\n", filename);
 	}
 	close(fd);
 

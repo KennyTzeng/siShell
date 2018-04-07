@@ -12,9 +12,9 @@ void sh_chmod(char* mode, char* name) {
 	}
 
 	if(!chmod(name, strtol(mode, NULL, 8))) {
-		printf("change file \'%s\' permission to %03lo successfully\n", name, strtol(mode, NULL, 8));
+		printf("change \'%s\' permission to %03lo successfully\n", name, strtol(mode, NULL, 8));
 	}else {
-		printf("change file \'%s\' permission to %03lo failed\n", name, strtol(mode, NULL, 8));
+		printf("change \'%s\' permission to %03lo failed\n", name, strtol(mode, NULL, 8));
 	}
 
 	return;

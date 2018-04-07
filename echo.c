@@ -21,7 +21,7 @@ void echo(char* str, char* filename) {
 			strcat(str, "\n");
 			write(fd, str, strlen(str));
 		} else {
-			printf("can't append \"%s\" to file %s, file doesn't exists\n", str, filename);
+			printf("can't append \"%s\" to file %s, file doesn't exist\n", str, filename);
 		}
 		close(fd);
 	}

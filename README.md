@@ -1,1 +1,67 @@
 Secure Interactive Shell
+
+How to use : 
+Just `make` to compile and `./siShell` to launch the shell program.
+When you see the prompt like `$ `, you can type in command.
+
+Commands :
+cat {file}:              Display content of {file}. (file ONLY, not directory)
+						 If the {file} doesn't exist, output "cat: {file}: No such file".
+
+cd {dir}:                Switch current working directory to {dir}.
+						 Output "current working directory: {dir}".
+						 If the {dir} doesn't exist, output "cd: {dir}: No such file or directory".
+
+chmod {mode} {file/dir}: Change the mode (permission) of a file or directory.
+                         {mode} must be a valid octal number.
+						 Output "change '{file/dir}' permission to {mode} successfully".
+						 If failed, output "change '{file/dir}' permission to {mode} failed".
+
+echo {str}:				 Display {str}.
+echo {str} {filename}:   Open {filename} and append {str} to the file.
+						 If the {filename} doesn't exist, output "can't append {str} to file {filename}, file doesn't exist".
+
+exit:                    Leave the shell.
+						 Output "GoodBye!".
+
+find:					 List files/dirs in the current working directory.
+find {dir}:              List files/dirs in the {dir}.
+						 Outputs contatin file name, type, and size.
+						 If the {dir} doesn't exist, output "cannot open directory {dir}".
+
+help:                    Display help message.
+						 Output commands, parameters, and descriptions.
+
+id:                      Show current euid and egid number.
+						 Output "euid = geteuid() , egid = getegid()".
+						 
+mkdir {dir}:             Create a new directory {dir}.
+						 Output "new directory - {dir} has been created".
+
+pwd:                     Print the current working directory.
+
+rm {file}:               Remove a file.
+						 Output "file - {file} has been removed".
+						 If failed, output "remove file - {file} failed".
+
+rmdir {dir}:             Remove an empty directory.
+						 Output "remove an empty directory - {dir} successfully".
+						 If failed, output "remove an empty directory - {dir} failed".
+
+stat {file/dir}:         Display detailed information of the given file/dir.
+						 Outputs contain file name, type, size, blocks, io block, device, inode, links,
+						 access, uid, gid, last access time, last modify time, and last change time.
+						 If the {file/dir} doesn't exist, output "stat: cannot stat '{file/dir}': No such file or directory".
+
+touch {file}:            Update the {file}'s access and modification timestamp.
+						 Output "touch file '{file}' successfully".
+						 If {file} does not exist, create empty file named {file}.
+			             Output "create file '{file}' successfully because it does not exist previously".
+
+umask {mode}:            Change the umask of the current session.
+						 {mode} must be a valid octal number.
+						 Output "the umask value is {mode} now".
+
+If there are some missing parameters, output "usage: {command} {parameter 1} [parameter 2]". 
+If command not recognized, output "{command}: command not found. type 'help' to get command list".
+
