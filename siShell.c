@@ -37,7 +37,8 @@ int main(int argc, char* argv[]) {
 		setuid(atoi(argv[1]));
 		setgid(atoi(argv[2]));
 	}
-	
+	setbuf(stdout, NULL);
+
 	sh_loop();
 
 	return 0;
